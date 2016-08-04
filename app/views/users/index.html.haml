@@ -1,0 +1,29 @@
+%h1 Users
+%center
+  = will_paginate @users
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th 
+        User
+      %th
+        Email ID
+      %th
+        No. Of Txns
+      %th
+        Completed
+      %th
+        Pending
+      %th
+        Actions 
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= user.name
+        %td= user.email_id
+        %td= link_to user.payment_txns.count, payment_txns_path(:user_id => user.id ,:status => [PaymentTxn::NEW,PaymentTxn::INPROGRESS,PaymentTxn::PAID])
+        %td= link_to user.completed_payments.count, payment_txns_path(:user_id => user.id ,:status => [PaymentTxn::PAID])
+        %td= link_to user.in_progress_payments.count, payment_txns_path(:user_id => user.id ,:status => [PaymentTxn::NEW,PaymentTxn::INPROGRESS])
+        %td= link_to 'Add New Txn', new_payment_txn_path(:user_id => user.id), :class => 'btn btn-default'
+%br/
+= link_to 'Create User', new_user_path, :class => 'btn btn-default'

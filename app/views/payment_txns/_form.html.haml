@@ -1,0 +1,50 @@
+= nested_form_for @payment_txn do |f|
+  - if @payment_txn.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@payment_txn.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @payment_txn.errors.full_messages.each do |msg|
+          %li= msg
+  .row
+    .col-md-2
+      Name:
+    .col-md-4
+      = @user.name
+  %br
+  .row
+    .col-md-2
+      Email Id
+    .col-md-4
+      = @user.email_id
+  %br
+  .row
+    .col-md-2
+      Total Amount
+    .col-md-4
+      = f.text_field :total_amount, :class =>'form-control',:required => true
+  %br
+  .row
+    .col-md-2
+      Discount
+    .col-md-4
+      = f.text_field :discount, :class =>'form-control',:required => true
+  = f.fields_for :installments do |i|
+    %br
+    .row
+      .col-md-2
+        Scheduled Date
+      .col-md-4
+        = i.text_field :scheduled_date, :class =>'form-control datepicker'
+        = i.hidden_field :status, :value => Installment::SCHEDULED
+      .col-md-2
+        = i.link_to_remove "Remove Installment Entry"
+    %br
+  = f.link_to_add "Add Installment Entry",:installments, :class => 'btn btn-default'
+  = f.hidden_field :user_id, :value => @user.id
+  %br
+  %br
+  .actions
+    = f.submit 'Save', :class => 'btn btn-primary'
+    = link_to 'Back', root_path, :class => 'btn btn-default'

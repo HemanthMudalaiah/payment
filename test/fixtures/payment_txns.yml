@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  total_amount: 1.5
+  status: MyString
+  discount: 1.5
+  transaction_date: 2016-08-03
+  : 
+  amount_paid: 1.5
+  no_of_installments: 1
+
+two:
+  user_id: 1
+  total_amount: 1.5
+  status: MyString
+  discount: 1.5
+  transaction_date: 2016-08-03
+  : 
+  amount_paid: 1.5
+  no_of_installments: 1

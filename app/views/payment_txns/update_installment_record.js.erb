@@ -1,0 +1,6 @@
+<% if @save_flag  %>
+  $('.installment_details').html('<%= escape_javascript(render(:partial => 'installment_details', :locals => {:@payment_txn => @payment_txn})) %>');
+<% else %>
+  alert("Something went wrong.")
+<% end %>
+

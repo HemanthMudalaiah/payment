@@ -1,0 +1,72 @@
+.row
+  .col-md-6
+    .well.well-lg
+      %b User Details
+      %br
+      %br
+      .row
+        .col-md-2
+          %b Name:
+        .col-md-3
+          = @payment_txn.user.name
+      .row
+        .col-md-2
+          %b Email:
+        .col-md-4
+          = @payment_txn.user.email_id
+      .row
+        .col-md-2
+          %b Status:
+        .col-md-4
+          = @payment_txn.status
+  .col-md-6
+    .well.well-lg
+      %b Payment Details
+      %br
+      %br
+      .row
+        .col-md-4
+          %b Total Amount:
+        .col-md-8
+          = @payment_txn.total_amount
+      .row
+        .col-md-4
+          %b Discount:
+        .col-md-8
+          = @payment_txn.discount
+      .row
+        .col-md-4
+          %b Paid Amount:
+        .col-md-8
+          = @payment_txn.amount_paid
+- if @payment_txn.installments.present?
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th
+          Term
+        %th
+          Amount
+        %th
+          Scheduled Date
+        %th
+          Status
+        %th
+          Update?
+        %th
+          Action
+    %tbody
+      - @payment_txn.installments.each_with_index do |installment, i|
+        = form_tag "update_installment_record.js?id=#{installment.id}", :remote => true do
+          %tr
+            %td= i + 1
+            %td= @payment_txn.installment_amount
+            %td= installment.scheduled_date.strftime('%d %b %Y')
+            - if installment.is_overdue? && !installment.paid?
+              %td Overdue
+            - else
+              %td= installment.status
+            %td= select_tag :status, options_for_select(installment_options)
+            %td= submit_tag :Save,:class => 'btn btn-primary'
+- else
+  = link_to 'Create Installment', root_path, :class => 'btn btn-default'

@@ -1,0 +1,58 @@
+%h1 Payment Transactions
+%br
+%center
+  = will_paginate @payment_txns
+.row
+  .col-md-2
+    Name:
+  .col-md-4
+    = @user.name
+.row
+  .col-md-2
+    Email Id:
+  .col-md-4
+    = @user.email_id
+.row
+  .col-md-2
+    Status:
+  .col-md-4
+    = @status.join(', ').html_safe
+%br
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th
+        ID
+      %th
+        Total Amount
+      %th
+        Discount
+      %th
+        Amount Paid
+      %th
+        Remaining Amount
+      %th
+        EMI Amount
+      %th 
+        Installments
+      %th
+        Status
+      %th
+        Transaction Date
+      / %th
+      /   Actions 
+  %tbody
+    - @payment_txns.each do |payment_txn|
+      %tr
+        %td= payment_txn.id
+        %td= payment_txn.total_amount
+        %td= payment_txn.discount
+        %td= payment_txn.amount_paid
+        %td= payment_txn.remaining_amount
+        %td= payment_txn.installment_amount
+        %td= link_to payment_txn.no_of_installments.to_i, edit_payment_txn_path(payment_txn)
+        %td= payment_txn.status
+        %td= payment_txn.transaction_date.strftime('%d %b %Y')
+        / %td= link_to 'Edit', edit_payment_txn_path(payment_txn), :class => 'btn btn-default'
+%br/
+= link_to 'Back', root_path, :class => 'btn btn-default'

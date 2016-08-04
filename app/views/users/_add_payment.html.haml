@@ -1,0 +1,53 @@
+= nested_form_for @user do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@user.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  .row
+    .col-md-2
+      Name:
+    .col-md-4
+      = user.name
+  %br
+  .row
+    .col-md-2
+      Email Id
+    .col-md-4
+      = user.email_id
+  %br
+  .div
+    = f.fields_for :payment_txns do |pt|
+      .row
+        .col-md-2
+          Total Amount
+        .col-md-4
+          = pt.text_field :total_amount, :class =>'form-control',:required => true
+      %br
+      .row
+        .col-md-2
+          Discount
+        .col-md-4
+          = pt.text_field :discount, :class =>'form-control',:required => true
+        .col-md-2
+          = pt.link_to_remove "Remove Payment Entry"
+      = pt.fields_for :installments do |i|
+        %br
+        .row
+          .col-md-2
+            Scheduled Date
+          .col-md-4
+            = i.text_field :scheduled_date, :class =>'form-control datepicker'
+          .col-md-2
+            = i.link_to_remove "Remove Installment Entry"
+      %br
+      = pt.link_to_add "Add Installment Entry",:installments, :class => 'btn btn-default'
+      %br
+    = f.link_to_add "Add Payment Entry", :payment_txns, :class => 'btn btn-default'
+  %br
+  .actions
+    = f.submit 'Save', :class => 'btn btn-primary'
+    = link_to 'Back', payment_txns_path, :class => 'btn btn-default'
