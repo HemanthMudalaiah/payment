@@ -48,3 +48,8 @@ gem 'haml'
 gem "will_paginate"
 gem 'bootstrap-sass'
 gem "jquery-ui-rails"
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.5'
+  gem "shoulda-matchers"
+end
