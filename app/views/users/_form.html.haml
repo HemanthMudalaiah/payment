@@ -21,6 +21,10 @@
   %br
   = f.fields_for :payment_txns do |pt|
     .row
+      .col-md-4
+        %b Payment Entry
+    %br
+    .row
       .col-md-2
         Total Amount
       .col-md-4
@@ -32,12 +36,28 @@
       .col-md-4
         = pt.text_field :discount, :class =>'form-control',:required => true
       .col-md-2
-        = pt.link_to_remove "Remove Payment Entry"
+        / = pt.link_to_remove "Remove Payment Entry"
     = pt.fields_for :installments do |i|
       %br
       .row
         .col-md-2
-          Scheduled Date
+          %b Installment Entry
+      %br
+      .row
+        .col-md-2
+          Description
+        .col-md-4
+          = i.text_field :content, :class =>'form-control',:required => true
+      %br
+      .row
+        .col-md-2
+          Installment Amount
+        .col-md-4
+          = i.text_field :installment_amount, :class =>'form-control',:required => true
+      %br
+      .row
+        .col-md-2
+          Installment Date
         .col-md-4
           = i.text_field :scheduled_date, :class =>'form-control datepicker'
           = i.hidden_field :status, :value => Installment::SCHEDULED
@@ -46,11 +66,11 @@
     %br
     = pt.link_to_add "Add Installment Entry",:installments, :class => 'btn btn-default'
     %br
-  = f.link_to_add "Add Payment Entry", :payment_txns, :class => 'btn btn-default'
+  = f.link_to_add "Add Payment Entry", :payment_txns, :class => 'btn btn-default hideAfterClick'
   %br
   %br
   .actions
-    = f.submit 'Save', :class => 'btn btn-primary'
+    = f.submit 'Create User', :class => 'btn btn-primary'
     = link_to 'Back', root_path, :class => 'btn btn-default'
 
 

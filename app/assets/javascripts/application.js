@@ -18,6 +18,7 @@
 //= require jquery_nested_form
 $(document).ready(function(){
   $(document).on('nested:fieldAdded', function(event){
+  	$(".hideAfterClick").hide();
     var field = event.field; 
     var dateField = field.find('.datepicker');
     dateField.datepicker({ minDate: 0, dateFormat: 'dd-mm-yy' });

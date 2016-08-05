@@ -23,7 +23,6 @@
     .well.well-lg
       %b Payment Details
       %br
-      %br
       .row
         .col-md-4
           %b Total Amount:
@@ -39,12 +38,17 @@
           %b Paid Amount:
         .col-md-8
           = @payment_txn.amount_paid
+      .row
+        .col-md-4
+          %b Remaining Amount:
+        .col-md-8
+          = @payment_txn.remaining_amount
 - if @payment_txn.installments.present?
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
         %th
-          Term
+          Content
         %th
           Amount
         %th
@@ -59,8 +63,8 @@
       - @payment_txn.installments.each_with_index do |installment, i|
         = form_tag "update_installment_record.js?id=#{installment.id}", :remote => true do
           %tr
-            %td= i + 1
-            %td= @payment_txn.installment_amount
+            %td= installment.content 
+            %td= installment.installment_amount
             %td= installment.scheduled_date.strftime('%d %b %Y')
             - if installment.is_overdue? && !installment.paid?
               %td Overdue

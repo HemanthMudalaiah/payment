@@ -95,6 +95,6 @@ class PaymentTxnsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payment_txn_params
-      params.require(:payment_txn).permit(:total_amount, :discount, :user_id, installments_attributes: [:scheduled_date,:status, :_destroy])
+      params.require(:payment_txn).permit(:total_amount, :discount, :user_id, installments_attributes: [:scheduled_date,:status, :content, :installment_amount, :_destroy])
     end
 end

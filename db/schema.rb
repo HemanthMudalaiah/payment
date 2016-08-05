@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804082356) do
+ActiveRecord::Schema.define(version: 20160805081537) do
 
   create_table "installments", force: true do |t|
     t.integer  "payment_txn_id"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20160804082356) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "content"
+    t.float    "installment_amount"
   end
 
   create_table "payment_txns", force: true do |t|
@@ -32,7 +34,6 @@ ActiveRecord::Schema.define(version: 20160804082356) do
     t.integer  "no_of_installments"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "installment_amount"
   end
 
   create_table "users", force: true do |t|

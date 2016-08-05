@@ -69,6 +69,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email_id, payment_txns_attributes: [:total_amount, :discount, :_destroy, installments_attributes: [:scheduled_date, :status,:_destroy]])
+    params.require(:user).permit(:name, :email_id, payment_txns_attributes: [:total_amount, :discount, :_destroy, installments_attributes: [:scheduled_date, :status, :content, :installment_amount,:_destroy]])
     end
 end

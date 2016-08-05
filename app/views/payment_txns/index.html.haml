@@ -31,8 +31,6 @@
         Amount Paid
       %th
         Remaining Amount
-      %th
-        EMI Amount
       %th 
         Installments
       %th
@@ -49,7 +47,6 @@
         %td= payment_txn.discount
         %td= payment_txn.amount_paid
         %td= payment_txn.remaining_amount
-        %td= payment_txn.installment_amount
         %td= link_to payment_txn.no_of_installments.to_i, edit_payment_txn_path(payment_txn)
         %td= payment_txn.status
         %td= payment_txn.transaction_date.strftime('%d %b %Y')

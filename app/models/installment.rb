@@ -15,7 +15,6 @@ class Installment < ActiveRecord::Base
 	def update_payment_txn_record
 		payment_txn = self.payment_txn
 		payment_txn.no_of_installments = payment_txn.installments.count
-		payment_txn.installment_amount = (payment_txn.total_amount - payment_txn.discount) / payment_txn.no_of_installments
 		payment_txn.save
 	end
 
@@ -27,6 +26,8 @@ class Installment < ActiveRecord::Base
 		elsif installment_states.count > 1
 			payment_txn.status = PaymentTxn::INPROGRESS
 		end
+		payment_txn.amount_paid = payment_txn.installments.where('status = ?', PAID).collect(&:installment_amount).sum
+		payment_txn.remaining_amount = payment_txn.total_amount - payment_txn.discount - payment_txn.amount_paid
 		payment_txn.save
 	end
 

@@ -11,13 +11,17 @@
     .col-md-2
       Name:
     .col-md-4
-      = @user.name
+      = @user.name rescue @payment_txn.user.name
   %br
   .row
     .col-md-2
       Email Id
     .col-md-4
-      = @user.email_id
+      = @user.email_id rescue @payment_txn.user.email_id
+  %br
+  .row
+    .col-md-4
+      %b Payment Entry
   %br
   .row
     .col-md-2
@@ -32,17 +36,34 @@
       = f.text_field :discount, :class =>'form-control',:required => true
   = f.fields_for :installments do |i|
     %br
-    .row
-      .col-md-2
-        Scheduled Date
-      .col-md-4
-        = i.text_field :scheduled_date, :class =>'form-control datepicker'
-        = i.hidden_field :status, :value => Installment::SCHEDULED
-      .col-md-2
-        = i.link_to_remove "Remove Installment Entry"
+      .row
+        .col-md-2
+          %b Installment Entry
+      %br
+      .row
+        .col-md-2
+          Description
+        .col-md-4
+          = i.text_field :content, :class =>'form-control',:required => true
+      %br
+      .row
+        .col-md-2
+          Installment Amount
+        .col-md-4
+          = i.text_field :installment_amount, :class =>'form-control',:required => true
+      %br
+      .row
+        .col-md-2
+          Installment Date
+        .col-md-4
+          = i.text_field :scheduled_date, :class =>'form-control datepicker'
+          = i.hidden_field :status, :value => Installment::SCHEDULED
+        .col-md-2
+          = i.link_to_remove "Remove Installment Entry"
     %br
   = f.link_to_add "Add Installment Entry",:installments, :class => 'btn btn-default'
-  = f.hidden_field :user_id, :value => @user.id
+  - user_id = @user.id rescue @payment_txn.user.id
+  = f.hidden_field :user_id, :value => user_id
   %br
   %br
   .actions
